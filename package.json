@@ -1,0 +1,29 @@
+{
+  "name": "jwfblog",
+  "version": "1.0.0",
+  "description": "A blogging engine for my personal site.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackWFinlay/Blog-Engine.git"
+  },
+  "keywords": [
+    "blog",
+    "engine"
+  ],
+  "author": "Jack Witbrock Finlay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JackWFinlay/Blog-Engine/issues"
+  },
+  "homepage": "https://github.com/JackWFinlay/Blog-Engine#readme",
+  "dependencies": {
+    "async": "~2.1.5",
+    "body-parser": "~1.17.1",
+    "documentdb": "~1.11.0",
+    "express": "~4.15.2"
+  }
+}

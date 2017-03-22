@@ -1,0 +1,3 @@
+﻿// blogs.js
+
+function Blogs()

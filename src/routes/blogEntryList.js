@@ -1,7 +1,6 @@
 ﻿// blogEntryList.js
 
 var DocumentDBClient = require('documentdb').DocumentClient;
-var async = require('async');
 
 function BlogEntryList(blogEntryDao) {
     this.blogEntryDao = blogEntryDao;

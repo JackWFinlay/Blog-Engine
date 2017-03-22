@@ -13,23 +13,35 @@ function BlogEntryDao(documentDBClient, databaseId, collectionId) {
 }
 
 BlogEntryDao.prototype = {
-    init: function (callback) {
-        var self = this;
+    init() {
+        createDb.then(createCollection())
 
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db) {
-            if (err) {
-                callback(err);
-            } else {
-                self.database = db;
-                docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
-                    if (err) {
-                        callback(err);
+    },
 
-                    } else {
-                        self.collection = coll;
-                    }
-                });
-            }
+    createDb() {
+        return new Promise(function (resolve, reject) {
+
+            docdbUtils.getOrCreateDatabase(this.client, this.databaseId, function (err, db) {
+                if (err) {
+                    reject(err);
+                } else {
+                    this.database = db;
+                    resolve();
+                }
+            });
+        });
+
+    },
+
+    createCollection() {
+        return new Promise(function (resolve, reject) {
+            docdbUtils.getOrCreateCollection(this.client, this.database._self, this.collectionId, function (err, coll) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(coll);
+                }
+            };
         });
     },
 
@@ -108,7 +120,18 @@ BlogEntryDao.prototype = {
 
     getAllItems() {
         return new Promise(function (resolve, reject) {
+            let querySpec = {
+                query: 'SELECT * FROM root r',
+            };
 
+            this.client.queryDocuments(this.collection._self, querySpec).toArray(function (err, results) {
+                if (err) {
+                    reject(err);
+
+                } else {
+                    resolve(null, results);
+                }
+            });
         });
     }
 };

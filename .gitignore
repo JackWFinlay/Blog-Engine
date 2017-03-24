@@ -38,6 +38,7 @@ jspm_packages
 
 # Visual Studio junk
 jwfblog
+.vscode
 
 #Config
 config

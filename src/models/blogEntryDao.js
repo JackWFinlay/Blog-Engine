@@ -14,11 +14,15 @@ function BlogEntryDao(documentDBClient, databaseId, collectionId) {
 
 BlogEntryDao.prototype = {
     init() {
-        self = this;
-        this.createDb()
-            .catch((err) => console.log(err))
-            .then(() => this.createCollection.bind(self))
-            .catch((err) => console.log(err));
+        return new Promise( (resolve, reject) => {
+            self = this;
+            this.createDb()
+                .catch((err) => reject(err))
+                .then(() => this.createCollection.bind(self))
+                .catch((err) => reject(err));
+                
+            resolve();
+        });
     },
 
     createDb() {

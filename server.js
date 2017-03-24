@@ -15,10 +15,18 @@ var docDbClient = new DocumentDBClient(config.host, {
     masterKey: config.authKey
 });
 
+
 var blogEntryDao = new BlogEntryDao(docDbClient, config.databaseId, config.collectionId);
-var blogEntryList = new BlogEntryList(blogEntryDao);
-blogEntryDao.init();
-var blogs = new Blogs(blogEntryList);
+blogEntryDao.init().catch((err) => console.log("1: " + err))
+            // .then(() => {
+                var blogEntryList = new BlogEntryList(blogEntryDao);
+                let blogs = new Blogs(blogEntryList);
+
+                // map all /Blog/ routes to blogs.js
+                app.use('/blogs', blogs);
+            // });
+
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -27,16 +35,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-//var router = express.Router();// get an instance of the express Router
+// var router = express.Router(); // get an instance of the express Router
 
 // serve static resources. i.e. public/css/site.css will be css/site.css
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '../')));
 
-// map all /Blog/ routes to blogs.js
-app.use('/blogs', blogs);
-
-// Start server
+// Start servers
 var port = process.env.PORT || 8000;
 app.listen(port);
 console.log('Magic happens on port ' + port); 

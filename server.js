@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-var router = express.Router();// get an instance of the express Router
+//var router = express.Router();// get an instance of the express Router
 
 // serve static resources. i.e. public/css/site.css will be css/site.css
 app.use(express.static(path.join(__dirname, '/public')));

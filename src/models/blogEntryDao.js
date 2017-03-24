@@ -14,13 +14,15 @@ function BlogEntryDao(documentDBClient, databaseId, collectionId) {
 
 BlogEntryDao.prototype = {
     init() {
-        createDb.then(createCollection())
-
+        self = this;
+        this.createDb()
+            .catch((err) => console.log(err))
+            .then(() => this.createCollection.bind(self))
+            .catch((err) => console.log(err));
     },
 
     createDb() {
-        return new Promise(function (resolve, reject) {
-
+        return new Promise((resolve, reject) => {
             docdbUtils.getOrCreateDatabase(this.client, this.databaseId, function (err, db) {
                 if (err) {
                     reject(err);
@@ -30,7 +32,6 @@ BlogEntryDao.prototype = {
                 }
             });
         });
-
     },
 
     createCollection() {
@@ -39,19 +40,18 @@ BlogEntryDao.prototype = {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(coll);
+                    this.collection = collection
+                    resolve();
                 }
-            };
+            });
         });
     },
 
     find: function (querySpec, callback) {
-        var self = this;
 
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
+        self.client.queryDocuments(this.collection._self, querySpec).toArray(function (err, results) {
             if (err) {
                 callback(err);
-
             } else {
                 callback(null, results);
             }

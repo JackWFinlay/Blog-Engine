@@ -8,13 +8,12 @@ function BlogEntryList(blogEntryDao) {
 
 BlogEntryList.prototype = {
     getEntry(itemId) {
-        return this.blogEntryDao.getItem(itemId);
+        return this.blogEntryDao.bind(getItem(itemId));
     },
 
     getAllEntries() {
-        return this.blogEntryDao.getAllItems();
+        return this.blogEntryDao.bind(getAllItems());
     }
-
 
 };
 

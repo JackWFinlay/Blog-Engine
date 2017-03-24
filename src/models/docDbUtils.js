@@ -15,7 +15,6 @@ var DocDBUtils = {
         client.queryDatabases(querySpec).toArray(function (err, results) {
             if (err) {
                 callback(err);
-
             } else {
                 if (results.length === 0) {
                     var databaseSpec = {

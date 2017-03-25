@@ -11,11 +11,9 @@ var BlogEntryList    = require('./src/routes/blogEntrylist');
 var BlogEntryDao     = require('./src/models/blogEntryDao');
 var Blogs            = require('./src/routes/blogs');
 
-
 var docDbClient = new DocumentDBClient(config.host, {
     masterKey: config.authKey
 });
-
 
 var blogEntryDao = new BlogEntryDao(docDbClient, config.databaseId, config.collectionId);
 blogEntryDao.init().catch((err) => console.log("1: " + err))
@@ -28,8 +26,6 @@ blogEntryDao.init().catch((err) => console.log("1: " + err))
                 app.use('/blogs', Blogs);
             })
             .catch((err) => console.log(err));
-
-
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST

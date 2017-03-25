@@ -1,4 +1,5 @@
 //server.js
+'use strict';
 
 var express          = require('express');
 var app              = express();
@@ -18,13 +19,16 @@ var docDbClient = new DocumentDBClient(config.host, {
 
 var blogEntryDao = new BlogEntryDao(docDbClient, config.databaseId, config.collectionId);
 blogEntryDao.init().catch((err) => console.log("1: " + err))
-            // .then(() => {
+            .then(() => {
                 var blogEntryList = new BlogEntryList(blogEntryDao);
-                let blogs = new Blogs(blogEntryList);
-
+                console.log(1);
+                var blogs = new Blogs(blogEntryList);
+                console.log(2);
                 // map all /Blog/ routes to blogs.js
                 app.use('/blogs', blogs);
-            // });
+                console.log(3);
+            })
+            .catch((err) => console.log(err));
 
 
 

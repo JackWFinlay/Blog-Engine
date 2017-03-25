@@ -7,7 +7,6 @@ var bodyParser       = require('body-parser');
 var path       	     = require('path');
 var DocumentDBClient = require('documentdb').DocumentClient;
 var config           = require('./src/config/documentdbConfig');
-var BlogEntryList    = require('./src/routes/blogEntrylist');
 var BlogEntryDao     = require('./src/models/blogEntryDao');
 var Blogs            = require('./src/routes/blogs');
 

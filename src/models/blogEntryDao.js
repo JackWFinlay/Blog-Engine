@@ -1,5 +1,6 @@
 ﻿// blogEntryDao.js
 'use strict';
+
 var DocumentDBClient = require('documentdb').DocumentClient;
 var DocDBUtils       = require('./docdbUtils');
 var docdbUtils       = new DocDBUtils();
@@ -125,7 +126,7 @@ BlogEntryDao.prototype = {
                     reject(err);
 
                 } else {
-                    resolve(null, results[0]);
+                    resolve(results[0]);
                 }
             });
         });
@@ -143,7 +144,7 @@ BlogEntryDao.prototype = {
                     reject(err);
 
                 } else {
-                    resolve(null, results);
+                    resolve(results);
                 }
             });
         });

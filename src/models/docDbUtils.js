@@ -2,27 +2,31 @@
 'use strict';
 
 var DocumentDBClient = require('documentdb').DocumentClient;
+var config           = require('../config/documentdbConfig');
+
 var HttpStatusCodes  = { NOTFOUND: 404 };
 
-function DocDBUtils(databaseId, urlConnection, collectionId){
-    var databaseUrl   = `dbs/${databaseId}`;
-    var collectionUrl = `${urlConnection}/colls/${collectionId}`;
-}
+var databaseUrl   = `dbs/${config.databaseId}`;
+var collectionUrl = `${databaseUrl}/colls/${config.collectionId}`;
+
+function DocDBUtils(){}
 
 DocDBUtils.prototype = {
-    getOrCreateDatabase: function (client, databaseId, collectionId, callback) {
+    getOrCreateDatabase(client) {
         return new Promise((resolve, reject) => {
             client.readDatabase(databaseUrl, (err, result) => {
                 if (err) {
                     if (err.code == HttpStatusCodes.NOTFOUND) {
-                        client.createDatabase({ id: databaseId}, (err, created) => {
+                        client.createDatabase({ id: config.databaseId}, (err, created) => {
                             if (err) reject(err)
                             else resolve(created);
                         });
                     } else {
+                        console.log(err);
                         reject(err);
                     }
                 } else {
+                    console.log(result);
                     resolve(result);
                 }
             });
@@ -55,16 +59,21 @@ DocDBUtils.prototype = {
         // });
     },
 
-    getOrCreateCollection: function (client, databaseLink, collectionId) {
+    getOrCreateCollection(client, databaseLink) {
         return new Promise((resolve, reject) => {
         client.readCollection(collectionUrl, (err, result) => {
             if (err) {
                 if (err.code == HttpStatusCodes.NOTFOUND) {
-                    client.createCollection(databaseUrl, config.collection, { offerThroughput: 400 }, (err, created) => {
-                        if (err) reject(err)
-                        else resolve(created);
+                    client.createCollection(databaseUrl,{ id: config.collectionId}, { offerThroughput: 400 }, (err, created) => {
+                        if (err) {
+                            reject(err)
+                        }
+                        else {
+                            resolve(created)
+                        };
                     });
                 } else {
+                    console.log(err);
                     reject(err);
                 }
             } else {

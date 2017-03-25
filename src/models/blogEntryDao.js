@@ -1,14 +1,15 @@
 ﻿// blogEntryDao.js
 'use strict';
 var DocumentDBClient = require('documentdb').DocumentClient;
-var docdbUtils = require('./docdbUtils');
+var DocDBUtils       = require('./docdbUtils');
+var docdbUtils       = new DocDBUtils();
 
 function BlogEntryDao(documentDBClient, databaseId, collectionId) {
-    this.client = documentDBClient;
-    this.databaseId = databaseId;
+    this.client       = documentDBClient;
+    this.databaseId   = databaseId;
     this.collectionId = collectionId;
 
-    this.database = null;
+    this.database   = null;
     this.collection = null;
 }
 
@@ -19,28 +20,42 @@ BlogEntryDao.prototype = {
             
             self.createDb()
                 .catch((err) => reject(err))
-                .then(() => this.createCollection.bind(self))
-                .catch((err) => reject(err));
-                
-            resolve();
+                .then(() => {
+                    console.log('create collection next');
+                    self.createCollection()
+                    console.log('create collection after ');
+                })
+                .catch((err) => reject(err))
+                .then(() => resolve());
         });
     },
 
     createDb() {
         let self = this;
         return new Promise((resolve, reject) => {
-            let db = docdbUtils.getOrCreateDatabase(self.client, self.databaseId, self.collectionId)
+            let db = docdbUtils.getOrCreateDatabase(self.client)
                                 .catch((err) => reject(err))
-                                .then((db) => self.database = db);
-            
-            resolve();
+                                .then((db) => {
+                                    self.database = db;
+                                    resolve();
+                                }); 
         });
     },
 
     createCollection() {
         let self = this;
+        console.log('creating collection');
         return new Promise(function (resolve, reject) {
-            docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId);
+            let collection = docdbUtils.getOrCreateCollection(self.client, self.database._self)
+                                        .catch((err) => {
+                                            console.log(err);
+                                            reject(err)
+                                        })
+                                        .then((collection) => {
+                                            console.log(collection);
+                                            self.collection = collection;
+                                            resolve();
+                                        });
         });
     },
 
@@ -117,12 +132,13 @@ BlogEntryDao.prototype = {
     },
 
     getAllEntries() {
+        let self = this;
         return new Promise(function (resolve, reject) {
             let querySpec = {
                 query: 'SELECT * FROM root r',
             };
 
-            this.client.queryDocuments(this.collection._self, querySpec).toArray(function (err, results) {
+            self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
                 if (err) {
                     reject(err);
 

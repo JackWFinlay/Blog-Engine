@@ -22,9 +22,7 @@ BlogEntryDao.prototype = {
             self.createDb()
                 .catch((err) => reject(err))
                 .then(() => {
-                    console.log('create collection next');
                     self.createCollection()
-                    console.log('create collection after ');
                 })
                 .catch((err) => reject(err))
                 .then(() => resolve());
@@ -53,7 +51,6 @@ BlogEntryDao.prototype = {
                                             reject(err)
                                         })
                                         .then((collection) => {
-                                            console.log(collection);
                                             self.collection = collection;
                                             resolve();
                                         });

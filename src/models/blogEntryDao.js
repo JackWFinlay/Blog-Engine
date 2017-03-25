@@ -1,5 +1,5 @@
 ﻿// blogEntryDao.js
-
+'use strict';
 var DocumentDBClient = require('documentdb').DocumentClient;
 var docdbUtils = require('./docdbUtils');
 
@@ -14,9 +14,10 @@ function BlogEntryDao(documentDBClient, databaseId, collectionId) {
 
 BlogEntryDao.prototype = {
     init() {
+        let self = this;
         return new Promise( (resolve, reject) => {
-            self = this;
-            this.createDb()
+            
+            self.createDb()
                 .catch((err) => reject(err))
                 .then(() => this.createCollection.bind(self))
                 .catch((err) => reject(err));
@@ -26,28 +27,20 @@ BlogEntryDao.prototype = {
     },
 
     createDb() {
+        let self = this;
         return new Promise((resolve, reject) => {
-            docdbUtils.getOrCreateDatabase(this.client, this.databaseId, function (err, db) {
-                if (err) {
-                    reject(err);
-                } else {
-                    this.database = db;
-                    resolve();
-                }
-            });
+            let db = docdbUtils.getOrCreateDatabase(self.client, self.databaseId, self.collectionId)
+                                .catch((err) => reject(err))
+                                .then((db) => self.database = db);
+            
+            resolve();
         });
     },
 
     createCollection() {
+        let self = this;
         return new Promise(function (resolve, reject) {
-            docdbUtils.getOrCreateCollection(this.client, this.database._self, this.collectionId, function (err, coll) {
-                if (err) {
-                    reject(err);
-                } else {
-                    this.collection = collection
-                    resolve();
-                }
-            });
+            docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId);
         });
     },
 
@@ -100,7 +93,8 @@ BlogEntryDao.prototype = {
         });
     },
 
-    getItem: function (itemId) {
+    getEntry(itemId) {
+        let self = this;
         return new Promise(function (resolve, reject) {
 
             let querySpec = {
@@ -111,7 +105,7 @@ BlogEntryDao.prototype = {
                 }]
             };
 
-            this.client.queryDocuments(this.collection._self, querySpec).toArray(function (err, results) {
+            self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
                 if (err) {
                     reject(err);
 
@@ -122,7 +116,7 @@ BlogEntryDao.prototype = {
         });
     },
 
-    getAllItems() {
+    getAllEntries() {
         return new Promise(function (resolve, reject) {
             let querySpec = {
                 query: 'SELECT * FROM root r',

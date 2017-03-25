@@ -20,13 +20,12 @@ var docDbClient = new DocumentDBClient(config.host, {
 var blogEntryDao = new BlogEntryDao(docDbClient, config.databaseId, config.collectionId);
 blogEntryDao.init().catch((err) => console.log("1: " + err))
             .then(() => {
-                var blogEntryList = new BlogEntryList(blogEntryDao);
-                console.log(1);
-                var blogs = new Blogs(blogEntryList);
-                console.log(2);
+                app.use((req, res, next) => {
+                    res.locals.blogEntryDao = blogEntryDao;
+                    next();
+                })
                 // map all /Blog/ routes to blogs.js
-                app.use('/blogs', blogs);
-                console.log(3);
+                app.use('/blogs', Blogs);
             })
             .catch((err) => console.log(err));
 

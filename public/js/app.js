@@ -23,7 +23,7 @@ window.onload = function(){
         data: {
             blogs: [{
                         "id": "1",
-                        "title": "First Blog",
+                        "title": "Placeholder Blog",
                         "body": "Hello, World!",
                         "tags": [
                             "first",
@@ -34,15 +34,17 @@ window.onload = function(){
                     }]
         },
 
-        ready: function(){
+        mounted(){
+
             this.getBlogs();
         },
 
         methods: {
             getBlogs: function() {
+                console.log('getting blogs');
                 // GET /blogs/all
                 this.$http.get('/blogs/all').then(response => {
-
+                    console.log("got blogs");
                     // get body data
                     this.blogs = response.body;
 

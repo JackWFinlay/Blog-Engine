@@ -17,24 +17,27 @@ window.onload = function () {
         data: {
             blogs: [{
                 "id": "1",
-                "title": "First Blog",
+                "title": "Placeholder Blog",
                 "body": "Hello, World!",
                 "tags": ["first", "blog", "hello"],
                 "author": "Jack"
             }]
         },
 
-        ready: function ready() {
+        mounted: function mounted() {
+
             this.getBlogs();
         },
+
 
         methods: {
             getBlogs: function getBlogs() {
                 var _this = this;
 
+                console.log('getting blogs');
                 // GET /blogs/all
                 this.$http.get('/blogs/all').then(function (response) {
-
+                    console.log("got blogs");
                     // get body data
                     _this.blogs = response.body;
                 }, function (response) {

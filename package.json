@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "babel-preset-env": "^1.2.2",
-    "gulp-babel": "^6.1.2"
+    "gulp-babel": "^6.1.2",
+    "gulp": "^3.9.1"
   }
 }

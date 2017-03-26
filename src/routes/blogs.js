@@ -6,6 +6,7 @@ var app     = express();
 var router 	= express.Router();
 
 router.get('/all', function (req, res) {
+    console.log("get all");
     let blogEntries = res.locals.blogEntryDao.getAllEntries()
         .catch((err) => console.log(err))
         .then((blogEntries) => res.json(blogEntries));

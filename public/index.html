@@ -52,12 +52,12 @@
 			</div>
 		</nav>
 		<!-- /nav -->
-		<div style="height:100px"></div>
-		<div style="height:1000px" id="body-placeholder">
+		
+		
+		<div id="blog-target">
+			<div style="height:100px"></div>
 			<div id="body" class="anchor-spacer"></div>
-			<p>body placeholder</p>
-			<my-component></my-component>
-
+			<blog v-for="(blog, index) in blogs" v-bind:blog="blog" v-bind:key="blog.id" class="blog"></blog>
 		</div>
 
 		<!-- Contact -->

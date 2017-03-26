@@ -39,6 +39,10 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '../')));
 
+app.get('/', function(req, res) {
+        res.sendFile("/public/index.html", {"root": __dirname});
+});
+
 // Start servers
 var port = process.env.PORT || 8000;
 app.listen(port);

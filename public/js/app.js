@@ -6,10 +6,12 @@ window.onload = function(){
     var Blog = {
         props: ['blog'],
         template:   `<div>
-                        <div>
-                            <p>{{blog.author}}</p>
-                            <p>{{blog.title}}</p>
-                            <p>{{blog.body}}</p>
+                        <p>{{blog.author}}</p>
+                        <p>{{blog.title}}</p>
+                        <p>{{blog.body}}</p>
+                        <p class="display-inline-block">Tags:&nbsp;</p>
+                        <div v-for="(tag, index) in blog.tags" v-bind:key="index" v-bind:tags="blog.tags">
+                            <a class="button">{{tag}}</a>
                         </div>
                     </div>`
     }
@@ -46,7 +48,9 @@ window.onload = function(){
                 this.$http.get('/blogs/all').then(response => {
                     console.log("got blogs");
                     // get body data
-                    this.blogs = response.body;
+                    if (response.body != {}) {
+                        this.blogs = response.body;
+                    }
 
                 }, response => {
                     // error callback

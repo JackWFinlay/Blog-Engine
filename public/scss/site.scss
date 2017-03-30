@@ -55,13 +55,13 @@ p {
 
 .button {
 	padding: 4px 4px 2px 4px;
-	margin-top: 5px;
+	margin: 5px 5px 0px 0px;
 	text-decoration: none;
 	border-radius: 5px;
 	border: 2px solid $soft-black;
-	min-width: 100px;
 	vertical-align: middle;
 	display: inline-block;
+	float: left;
 }
 
 .code-img {
@@ -100,10 +100,10 @@ p {
 }
 
 .hamburger {
-	font-size: 48px;
-	display: inline-block;
-	padding-top: 17px;
-	float: left;
+	font-size: 24px;
+	display: inline;
+	cursor: pointer; 
+	cursor: hand;
 }
 
 .hero {

@@ -12,7 +12,7 @@ $(document).ready(function(){
 	var openMenu = function () {
 		
 		$("#nav").animate({ height: "278px" }, 250);
-		$("#menu > li").css("display", "block");
+		$("#menu > li:not(:first-child)").css("display", "block");
 		
 		hamburgerOpen = true;
 	};

@@ -4,11 +4,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // create a schema
-var blogSchema = new Blog({
+var blogSchema = new Schema({
     author: String,
     title: String,
     body: String,
-    tags: [{tag: String}],
+    tags: [String],
     created_at: Date,
     updated_at: Date,
     sticky: Boolean

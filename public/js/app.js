@@ -52,7 +52,7 @@ window.onload = function(){
                         this.blogs = response.body;
                     }
 
-                }, response => {
+                }, error => {
                     // error callback
                     console.log(error);
                 });

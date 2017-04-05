@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var blogSchema = new Schema({
+    id: Number,
     author: String,
     title: String,
     body: String,

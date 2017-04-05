@@ -24,7 +24,8 @@ router.get('/:blog_id', function (req, res) {
                 resolve(blog);
             }
         });
-    }).then((blog) => res.json(blog));
+    }).catch( err => console.log(err))
+    .then((blog) => res.json(blog));
 });
 
 let getAllEntries = new Promise((resolve, reject) => {

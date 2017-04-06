@@ -1,10 +1,10 @@
 ﻿// blogs.js
 'use strict';
 
-let express = require('express');
-let app     = express();
-let router 	= express.Router();
-let Blog    = require('../models/blog');
+const express = require('express');
+const app     = express();
+const router 	= express.Router();
+const Blog    = require('../models/blog');
 
 router.get('/all', function (req, res) {
     let blogEntries = getAllEntries()
@@ -26,7 +26,7 @@ router.get('/:blog_id', function (req, res) {
     .then((blog) => res.json(blog));
 });
 
-let getAllEntries = function() {
+const getAllEntries = function() {
     return new Promise((resolve, reject) => {
         Blog.find({}, (err, blogs) => {
             if (err) { 

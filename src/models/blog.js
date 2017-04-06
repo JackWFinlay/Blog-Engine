@@ -1,10 +1,10 @@
 // blog.js
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // create a schema
-var blogSchema = new Schema({
+const blogSchema = new Schema({
     id: Number,
     author: String,
     title: String,
@@ -17,7 +17,7 @@ var blogSchema = new Schema({
 
 // the schema is useless so far
 // we need to create a model using it
-var Blog = mongoose.model('Blog', blogSchema);
+const Blog = mongoose.model('Blog', blogSchema);
 
 blogSchema.pre('save', (next) => {
     

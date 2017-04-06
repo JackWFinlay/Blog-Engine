@@ -1,14 +1,14 @@
 //server.js
 'use strict';
 
-var express          = require('express');
-var app              = express();
-var bodyParser       = require('body-parser');
-var path       	     = require('path');
-var mongoose         = require('mongoose');
-var config           = require('./src/config/config');
-var blogs            = require('./src/routes/blogs');
-var Blog             = require('./src/models/blog');
+const express    = require('express');
+const app        = express();
+const bodyParser = require('body-parser');
+const path       = require('path');
+const mongoose   = require('mongoose');
+const config     = require('./src/config/config');
+const blogs      = require('./src/routes/blogs');
+const Blog       = require('./src/models/blog');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -25,23 +25,39 @@ mongoose.connect(config.connectionString);
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '../')));
 
-let newBlog = new Blog({
-        id: "1",
-        title: "Placeholder Blog",
-        body: "Hello, World!",
-        tags: [
-                "first",
-                "blog",
-                "hello"
-        ],
-        author: "Jack"
-});
+// let newBlog = new Blog({
+//         id: "1",
+//         title: "First Blog",
+//         body: "Hello, World!",
+//         tags: [
+//                 "first",
+//                 "blog",
+//                 "hello"
+//         ],
+//         author: "Jack"
+// });
 
-newBlog.save((err) => {
-        if(err) throw err;
-});
+// newBlog.save((err) => {
+//         if(err) throw err;
+// });
 
-app.get('/blogs', blogs);
+// newBlog = new Blog({
+//         id: "2",
+//         title: "Second Blog",
+//         body: "Testing",
+//         tags: [
+//                 "second",
+//                 "blog",
+//                 "testing"
+//         ],
+//         author: "Jack"
+// });
+
+// newBlog.save((err) => {
+//         if(err) throw err;
+// });
+
+app.use('/blogs', blogs);
 
 app.get('/', function(req, res) {
         res.sendFile("/public/index.html", {"root": __dirname});

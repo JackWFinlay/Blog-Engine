@@ -60,7 +60,7 @@ app.use(express.static(path.join(__dirname, '../')));
 app.use('/blogs', blogs);
 
 app.get('/', function(req, res) {
-        res.sendFile("/public/index.html", {"root": __dirname});
+    res.sendFile("/public/index.html", {"root": __dirname});
 });
 
 // Start servers

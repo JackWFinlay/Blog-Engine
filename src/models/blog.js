@@ -20,7 +20,7 @@ const blogSchema = new Schema({
 const Blog = mongoose.model('Blog', blogSchema);
 
 blogSchema.pre('save', (next) => {
-    
+
     let currentDate = new Date();
     this.updated_at = currentDate
 
